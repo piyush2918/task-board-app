@@ -10,6 +10,7 @@ export default function LoginPage() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async () => {
     try {
@@ -43,42 +44,51 @@ export default function LoginPage() {
         </h1>
 
         <div className="w-full rounded-xl bg-white p-8 shadow-md">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-900">
-          Login
-        </h1>
-
-        <div className="space-y-4">
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full border p-3 rounded-lg text-gray-900"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full border p-3 rounded-lg text-gray-900"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button
-            onClick={handleLogin}
-            className="w-full bg-black text-white p-3 rounded-lg"
-          >
+          <h1 className="mb-6 text-center text-2xl font-bold text-gray-900">
             Login
-          </button>
+          </h1>
 
-           <p className="mt-4 text-center text-sm text-gray-600">
-            Do no`t have an account?{" "}
-          <Link href="/signup" className="font-medium text-black underline">
-            Signup
-          </Link>
-        </p>
+          <div className="space-y-4">
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full rounded-lg border p-3 text-gray-900"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full rounded-lg border p-3 pr-14 text-gray-900"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-gray-500 hover:text-gray-900"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
+
+            <button
+              onClick={handleLogin}
+              className="w-full rounded-lg bg-black p-3 text-white"
+            >
+              Login
+            </button>
+
+            <p className="mt-4 text-center text-sm text-gray-600">
+              Do no`t have an account?{" "}
+              <Link href="/signup" className="font-medium text-black underline">
+                Signup
+              </Link>
+            </p>
+          </div>
         </div>
-      </div>
       </div>
     </main>
   );

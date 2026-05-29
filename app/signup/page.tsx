@@ -13,6 +13,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleSignup = async () => {
     if (!email || !password) {
@@ -67,38 +68,47 @@ export default function SignupPage() {
           </p>
 
           <div className="space-y-4">
-          <input
-            type="text"
-            placeholder="Name"
-            className="w-full rounded-lg border p-3 text-gray-900"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
+            <input
+              type="text"
+              placeholder="Name"
+              className="w-full rounded-lg border p-3 text-gray-900"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
 
-          <input
-            type="email"
-            placeholder="Email"
-            className="w-full rounded-lg border p-3 text-gray-900"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+            <input
+              type="email"
+              placeholder="Email"
+              className="w-full rounded-lg border p-3 text-gray-900"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="w-full rounded-lg border p-3 text-gray-900"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+            <div className="relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                placeholder="Password"
+                className="w-full rounded-lg border p-3 pr-14 text-gray-900"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword((current) => !current)}
+                className="absolute inset-y-0 right-0 px-4 text-sm font-medium text-gray-500 hover:text-gray-900"
+              >
+                {showPassword ? "Hide" : "Show"}
+              </button>
+            </div>
 
-          <button
-            onClick={handleSignup}
-            disabled={submitting}
-            className="w-full rounded-lg bg-black p-3 text-white disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {submitting ? "Creating account..." : "Signup"}
-          </button>
-        </div>
+            <button
+              onClick={handleSignup}
+              disabled={submitting}
+              className="w-full rounded-lg bg-black p-3 text-white disabled:cursor-not-allowed disabled:opacity-60"
+            >
+              {submitting ? "Creating account..." : "Signup"}
+            </button>
+          </div>
 
           <p className="mt-4 text-center text-sm text-gray-600">
             Already have an account?{" "}
