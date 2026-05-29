@@ -89,3 +89,7 @@ npx prisma migrate dev --name init
 Run the development server:
 
 npm run dev
+
+https://task-board-app-sage.vercel.app/signup   (vercel)
+
+https://github.com/piyush2918/task-board-app  (github)
