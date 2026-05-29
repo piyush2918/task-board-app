@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const router = useRouter();
@@ -11,21 +12,26 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const response = await fetch("/api/auth/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const data = await response.json();
+      const data = await response.json();
 
-    if (response.ok) {
-      alert("Login successful");
-      router.push("/dashboard");
-    } else {
-      alert(data.error);
+      if (response.ok) {
+        toast.success("Login successful");
+        router.push("/dashboard");
+      } else {
+        toast.error(data.error ?? "Login failed");
+      }
+    } catch (error) {
+      console.error("Login failed:", error);
+      toast.error("Something went wrong");
     }
   };
 

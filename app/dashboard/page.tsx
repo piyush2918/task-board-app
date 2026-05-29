@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type Task = {
   id: string;
@@ -19,6 +20,7 @@ export default function DashboardPage() {
   const [title, setTitle] = useState("");
   const [loading, setLoading] = useState(true);
   const [creating, setCreating] = useState(false);
+  const [deletingTaskId, setDeletingTaskId] = useState<string | null>(null);
 
   const fetchTasks = async () => {
     try {
@@ -63,7 +65,10 @@ export default function DashboardPage() {
   }, []);
 
   const createTask = async () => {
-    if (!title.trim()) return;
+    if (!title.trim()) {
+      toast.error("Please enter a task title");
+      return;
+    }
 
     try {
       setCreating(true);
@@ -79,7 +84,15 @@ export default function DashboardPage() {
       if (response.ok) {
         setTitle("");
         await fetchTasks();
+        toast.success("Task added");
+        return;
       }
+
+      const data = await response.json();
+      toast.error(data.error ?? "Could not add task");
+    } catch (error) {
+      console.error("Create task failed:", error);
+      toast.error("Something went wrong");
     } finally {
       setCreating(false);
     }
@@ -105,6 +118,30 @@ export default function DashboardPage() {
     });
 
     window.location.href = "/login";
+  };
+
+  const deleteTask = async (taskId: string) => {
+    try {
+      setDeletingTaskId(taskId);
+
+      const response = await fetch(`/api/tasks/${taskId}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        await fetchTasks();
+        toast.success("Task deleted");
+        return;
+      }
+
+      const data = await response.json();
+      toast.error(data.error ?? "Could not delete task");
+    } catch (error) {
+      console.error("Delete task failed:", error);
+      toast.error("Something went wrong");
+    } finally {
+      setDeletingTaskId(null);
+    }
   };
 
   const totalTasks = tasks.length;
@@ -189,15 +226,25 @@ export default function DashboardPage() {
                   </p>
                 </div>
 
-                <select
-                  value={task.status}
-                  onChange={(e) => updateStatus(task.id, e.target.value)}
-                  className="rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-slate-950"
-                >
-                  <option value="TODO">Todo</option>
-                  <option value="IN_PROGRESS">In Progress</option>
-                  <option value="DONE">Done</option>
-                </select>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <select
+                    value={task.status}
+                    onChange={(e) => updateStatus(task.id, e.target.value)}
+                    className="rounded-lg border border-slate-300 px-3 py-2 outline-none focus:border-slate-950"
+                  >
+                    <option value="TODO">Todo</option>
+                    <option value="IN_PROGRESS">In Progress</option>
+                    <option value="DONE">Done</option>
+                  </select>
+
+                  <button
+                    onClick={() => deleteTask(task.id)}
+                    disabled={deletingTaskId === task.id}
+                    className="rounded-lg border border-red-200 bg-red-50 px-4 py-2 text-sm font-medium text-red-700 hover:bg-red-100 disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {deletingTaskId === task.id ? "Deleting..." : "Delete"}
+                  </button>
+                </div>
               </div>
             ))}
           </div>

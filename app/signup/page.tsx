@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -15,12 +16,12 @@ export default function SignupPage() {
 
   const handleSignup = async () => {
     if (!email || !password) {
-      alert("Email and password are required");
+      toast.error("Email and password are required");
       return;
     }
 
     if (!emailPattern.test(email)) {
-      alert("Please enter a valid email address");
+      toast.error("Please enter a valid email address");
       return;
     }
 
@@ -38,15 +39,15 @@ export default function SignupPage() {
       const data = await response.json();
 
       if (response.ok) {
-        alert("Signup successful. Please log in.");
+        toast.success("Signup successful. Please log in.");
         router.push("/login");
         return;
       }
 
-      alert(data.error ?? "Signup failed");
+      toast.error(data.error ?? "Signup failed");
     } catch (error) {
       console.error("Signup failed:", error);
-      alert("Something went wrong");
+      toast.error("Something went wrong");
     } finally {
       setSubmitting(false);
     }
