@@ -30,7 +30,7 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen flex items-center justify-center bg-gray-100 text-gray-900">
+    <main className="flex min-h-screen items-center justify-center px-4 text-gray-900">
       <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-900">
           Login

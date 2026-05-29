@@ -111,7 +111,7 @@ export default function DashboardPage() {
   const completedTasks = tasks.filter((task) => task.status === "DONE").length;
 
   return (
-    <main className="min-h-screen bg-slate-100 px-4 py-8 text-slate-900">
+    <main className="min-h-screen px-4 py-8 text-slate-900">
       <section className="mx-auto max-w-4xl">
         <div className="mb-8 flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
