@@ -150,6 +150,10 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen px-4 py-8 text-slate-900">
       <section className="mx-auto max-w-4xl">
+        <h1 className="mb-8 text-center text-5xl font-extrabold tracking-tight text-white drop-shadow-lg">
+          Taskify
+        </h1>
+
         <div className="mb-8 flex flex-col gap-4 rounded-2xl bg-white p-6 shadow-sm sm:flex-row sm:items-center sm:justify-between">
           <div>
             <p className="text-sm font-medium text-slate-500">Task Board</p>

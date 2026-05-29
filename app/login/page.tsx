@@ -36,8 +36,13 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="flex min-h-screen items-center justify-center px-4 text-gray-900">
-      <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
+    <main className="flex min-h-screen items-center justify-center px-4 py-10 text-gray-900">
+      <div className="flex w-full max-w-md flex-col items-center">
+        <h1 className="mb-6 text-center text-5xl font-extrabold tracking-tight text-white drop-shadow-lg">
+          Taskify
+        </h1>
+
+        <div className="w-full rounded-xl bg-white p-8 shadow-md">
         <h1 className="text-2xl font-bold mb-6 text-center text-gray-900">
           Login
         </h1>
@@ -73,6 +78,7 @@ export default function LoginPage() {
           </Link>
         </p>
         </div>
+      </div>
       </div>
     </main>
   );
